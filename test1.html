@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div id="parent">
+
+    <p>第1条元素</p>
+    <p>第2条元素</p>
+    <p>第3条元素</p>
+    <p>第4条元素</p>
+    <p>第5条元素</p>
+
+
+    <input type="text" value="第1个输入框">
+    <input type="text" value="第2个输入框">
+    <input type="text" value="第3个输入框">
+    <input type="text" value="第4个输入框">
+    <input type="text" value="第5个输入框">
+
+</div>
+
+<script>
+    var aa = document.querySelector("#parent");
+    var bb = function () {
+
+    };
+
+    bb.prototype.control = function () {
+
+        aa.addEventListener("blur", function (e) {
+
+            console.log(e);
+
+        })
+
+    }
+
+    var cc = new bb;
+
+    cc.control();
+
+
+</script>
+
+</body>
+</html>

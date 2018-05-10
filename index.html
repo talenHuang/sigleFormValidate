@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="test1">
+
+<div>
+
+    <input type="text" s-req s-int s-req-msg="321" s-reg="/d/" s-reg="123">
+
+
+</div>
+
+<ul>
+
+    <li>
+
+        <input type="number" s-req s-req-msg="321" s-reg="/\d/" s-reg="123">
+
+
+    </li>
+
+</ul>
+
+
+<input type="text" s-req s-req-msg="姓名不能为空"  s-int>
+
+
+</div>
+
+
+<form action="#">
+
+    <input type="text" s-req s-req-msg="321" >
+
+
+
+</form>
+
+
+<button id="btn">提交</button>
+
+
+
+
+<script src="sigleFormValidateReBuild.js"></script>
+
+<script>
+
+    var sfv = new Sfv();
+
+    sfv.init("#test1");
+
+
+    document.getElementById("btn").addEventListener("click",function (e) {
+
+        console.log("错误个数:"+sfv.validate())
+
+    })
+
+
+
+</script>
+
+</body>
+</html>
