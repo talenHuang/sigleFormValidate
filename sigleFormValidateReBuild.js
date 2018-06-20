@@ -3,29 +3,12 @@
 
     var sigleFormValidate = function () {
 
-
-        // this.type = {
-        //
-        //     "req": this.requiredValidate,//必填项
-        //     "int": this.intValidate,//数字
-        //     "email": function () {
-        //         return false
-        //     },//邮箱格式
-        //     "phone": function () {
-        //         return false
-        //     },//手机格式
-        //     "reg": function () {
-        //         return false
-        //     },//正则匹配
-        //
-        // }
-
         this.custom = {},
             this.type= {},
         this.defaultType = {
 
             "int": {defaultMsg:"该项只能为数字",reg:/^\d+$/},//数字
-            "reg": {defaultMsg:"手机号不正确",reg:/^1[3-9][0-9]{9}$/},//手机
+            "phone": {defaultMsg:"手机号不正确",reg:/^1[3-9][0-9]{9}$/},//手机
         }
 
         this.all_doms = null;//作用域下的所有节点
@@ -46,7 +29,6 @@
 
             var $this = this;
 
-            console.log(Object.keys($this.type));
 
             Object.keys($this.type).forEach(function (val) {
 
@@ -68,7 +50,7 @@
 
             var $this = this;
             var scope = scope || "body";
-debugger;
+
             $this.type = Object.assign($this.defaultType,$this.custom);
 
             $this.scope = scope;
@@ -77,7 +59,6 @@ debugger;
 
 
 
-            console.log($this.reqValidate);
 
             if (appendErrorMsg !== null && typeof appendErrorMsg === "function") {
 
@@ -92,6 +73,30 @@ debugger;
 
 
             aa.addEventListener("change", function (e) {
+
+
+                $this.sortValidate(e.target);
+
+
+            });
+
+            aa.addEventListener("keydown", function (e) {
+
+
+                $this.sortValidate(e.target);
+
+
+            });
+
+            aa.addEventListener("keyup", function (e) {
+
+
+                $this.sortValidate(e.target);
+
+
+            });
+
+            aa.addEventListener("blur", function (e) {
 
 
                 $this.sortValidate(e.target);
@@ -219,7 +224,6 @@ debugger;
             var elem  = e.getAttribute("s-compare");
             var $this = this;
             var required_msg = e.getAttribute("s-compare-msg") || "两项比较不一致";
-
             var dom = document.querySelector(elem);
 
             if(e.value !== dom.value){
@@ -339,7 +343,6 @@ debugger;
             var $this = this;
             var reqNodes = document.querySelector($this.scope).querySelectorAll("input[s-req]");
 
-            console.log(reqNodes);
 
             reqNodes.forEach(function (v) {
 

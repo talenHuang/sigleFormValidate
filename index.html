@@ -10,7 +10,7 @@
 
 <div>
 
-    <input type="text" s-req s-email s-email-msg="jaajjaja" s-req-msg="321" id="haha" >
+    <input type="text" s-req s-email s-req-msg="321"  id="haha">
 
 
 </div>
@@ -19,7 +19,7 @@
 
     <li>
 
-        <input s-compare="#haha" s-compare-msg="两次密码应该一致" type="number" s-req s-req-msg="321" s-reg="/\d/" s-reg="123">
+        <input s-compare="#haha" s-compare-msg="两次密码应该一致" type="text" s-req s-req-msg="321" >
 
 
     </li>
@@ -27,7 +27,7 @@
 </ul>
 
 
-<input type="text" s-req s-req-msg="姓名不能为空"  s-max="10">
+<input type="text" s-req s-req-msg="姓名不能为空"  s-min="10">
 
 
 </div>
@@ -61,6 +61,30 @@
 
 
     sfv.init("#test1");
+
+
+    sfv.minValidate=function (e) {
+
+        console.log("我是外面的最小值");
+
+        var num  = e.getAttribute("s-min");
+        var $this = this;
+        var required_msg = e.getAttribute("s-min-msg") || "该项不低于"+num+"个字符";
+
+
+        if(e.value.length < num){
+
+            $this.appendErrorMsg(e, required_msg, 'max');
+
+        }else {
+
+            $this.removeErrorMsg(e, 'max');
+
+
+        }
+
+
+    },
 
 
 
