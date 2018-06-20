@@ -10,7 +10,7 @@
 
 <div>
 
-    <input type="text" s-req s-int s-req-msg="321" s-reg="/d/" s-reg="123">
+    <input type="text" s-req s-email s-email-msg="jaajjaja" s-req-msg="321" id="haha" >
 
 
 </div>
@@ -19,7 +19,7 @@
 
     <li>
 
-        <input type="number" s-req s-req-msg="321" s-reg="/\d/" s-reg="123">
+        <input s-compare="#haha" s-compare-msg="两次密码应该一致" type="number" s-req s-req-msg="321" s-reg="/\d/" s-reg="123">
 
 
     </li>
@@ -27,7 +27,7 @@
 </ul>
 
 
-<input type="text" s-req s-req-msg="姓名不能为空"  s-int>
+<input type="text" s-req s-req-msg="姓名不能为空"  s-max="10">
 
 
 </div>
@@ -53,7 +53,15 @@
 
     var sfv = new Sfv();
 
+    sfv.custom = {
+
+        "email": {defaultMsg:"邮箱格式不正确",reg:/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/},//邮箱
+
+    }
+
+
     sfv.init("#test1");
+
 
 
     document.getElementById("btn").addEventListener("click",function (e) {

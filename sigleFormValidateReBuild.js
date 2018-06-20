@@ -20,10 +20,12 @@
         //
         // }
 
-        this.type = {
+        this.custom = {},
+            this.type= {},
+        this.defaultType = {
 
             "int": {defaultMsg:"该项只能为数字",reg:/^\d+$/},//数字
-            "reg": {defaultMsg:"手机号不正确",reg:/^1[3-9][0-9]{9}$/},//数字
+            "reg": {defaultMsg:"手机号不正确",reg:/^1[3-9][0-9]{9}$/},//手机
         }
 
         this.all_doms = null;//作用域下的所有节点
@@ -39,6 +41,7 @@
 
     sigleFormValidate.prototype = {
 
+        //自动创建关联方法
         buildRelatedMethods:function () {
 
             var $this = this;
@@ -60,10 +63,13 @@
 
         },
 
+        //初始化
         init: function (scope, appendErrorMsg) {
 
             var $this = this;
             var scope = scope || "body";
+debugger;
+            $this.type = Object.assign($this.defaultType,$this.custom);
 
             $this.scope = scope;
 
@@ -96,7 +102,7 @@
 
         },
 
-
+        //分类验证
         sortValidate: function (ele) {
 
             var $this = this;
@@ -120,7 +126,6 @@
                         var splice_array = (attrs[j].name.split("")).splice(2);
                         var splice_str = splice_array.join("");
 
-                        debugger;
                         //运行对应的验证函数
 
 
@@ -139,6 +144,7 @@
 
         },
 
+        //必填项验证方法
         reqValidate: function (e) {
 
             var $this = this;
@@ -162,7 +168,75 @@
         },
 
 
+        //最大值验证方法
+        maxValidate: function (e) {
 
+            var num  = e.getAttribute("s-max");
+            var $this = this;
+            var required_msg = e.getAttribute("s-max-msg") || "该项最大值不超过"+num+"个字符";
+
+
+            if(e.value.length > num){
+
+                $this.appendErrorMsg(e, required_msg, 'max');
+
+            }else {
+
+                $this.removeErrorMsg(e, 'max');
+
+
+            }
+
+
+        },
+
+
+        //最小值验证方法
+        minValidate: function (e) {
+
+            var num  = e.getAttribute("s-min");
+            var $this = this;
+            var required_msg = e.getAttribute("s-min-msg") || "该项不低于"+num+"个字符";
+
+
+            if(e.value.length < num){
+
+                $this.appendErrorMsg(e, required_msg, 'max');
+
+            }else {
+
+                $this.removeErrorMsg(e, 'max');
+
+
+            }
+
+
+        },
+
+        //比较表单验证方法
+        compareValidate: function (e) {
+
+            var elem  = e.getAttribute("s-compare");
+            var $this = this;
+            var required_msg = e.getAttribute("s-compare-msg") || "两项比较不一致";
+
+            var dom = document.querySelector(elem);
+
+            if(e.value !== dom.value){
+
+                $this.appendErrorMsg(e, required_msg, 'max');
+
+            }else {
+
+                $this.removeErrorMsg(e, 'max');
+
+
+            }
+
+
+        },
+
+        //添加错误信息
         appendErrorMsg: function (e, msg, flag) {
 
             var $this = this;
@@ -181,6 +255,7 @@
 
         },
 
+        //移除所有信息
         removeAllErrorMsg: function (e, flag) {
 
             var $this = this;
@@ -211,11 +286,11 @@
 
         },
 
+        //移除错误信息
         removeErrorMsg: function (e, flag) {
 
             var $this = this, nodeArray;
 
-            debugger;
             $this.errorArray = [];
 
             nodeArray = $this.findNextErrorElement(e);
@@ -233,6 +308,7 @@
 
         },
 
+        //找寻下一个错误节点
         findNextErrorElement: function (e) {
 
 
@@ -257,6 +333,7 @@
 
         },
 
+        //验证方法
         validate: function () {
 
             var $this = this;
