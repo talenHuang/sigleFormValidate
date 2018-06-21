@@ -4,12 +4,12 @@
     var sigleFormValidate = function () {
 
         this.custom = {},
-            this.type= {},
-        this.defaultType = {
+            this.type = {},
+            this.defaultType = {
 
-            "int": {defaultMsg:"该项只能为数字",reg:/^\d+$/},//数字
-            "phone": {defaultMsg:"手机号不正确",reg:/^1[3-9][0-9]{9}$/},//手机
-        }
+                "int": {defaultMsg: "该项只能为数字", reg: /^\d+$/},//数字
+                "phone": {defaultMsg: "手机号不正确", reg: /^1[3-9][0-9]{9}$/},//手机
+            }
 
         this.all_doms = null;//作用域下的所有节点
 
@@ -25,7 +25,7 @@
     sigleFormValidate.prototype = {
 
         //自动创建关联方法
-        buildRelatedMethods:function () {
+        buildRelatedMethods: function () {
 
             var $this = this;
 
@@ -33,7 +33,7 @@
             Object.keys($this.type).forEach(function (val) {
 
                 //  构建各类验证函数
-                $this[val+"Validate"] = new Function('e','type','var $target = this;' +
+                $this[val + "Validate"] = new Function('e', 'type', 'var $target = this;' +
                     '                var msg = e.getAttribute("s-"+type+"-msg") || $target.type[type].defaultMsg;\n' +
                     '                    if ($target.type[type].reg.test(e.value)) {\n' +
                     '                        $target.removeErrorMsg(e, type)\n' +
@@ -41,7 +41,7 @@
                     '                        $target.appendErrorMsg(e, msg, type);\n' +
                     '                }')
 
-        });
+            });
 
         },
 
@@ -51,13 +51,11 @@
             var $this = this;
             var scope = scope || "body";
 
-            $this.type = Object.assign($this.defaultType,$this.custom);
+            $this.type = Object.assign($this.defaultType, $this.custom);
 
             $this.scope = scope;
 
             $this.buildRelatedMethods();
-
-
 
 
             if (appendErrorMsg !== null && typeof appendErrorMsg === "function") {
@@ -69,18 +67,10 @@
 
             $this.all_doms = document.querySelectorAll(scope + " input");
 
-            var aa = document.querySelector("#test1");
+            var aa = document.querySelector(scope);
 
 
             aa.addEventListener("change", function (e) {
-
-
-                $this.sortValidate(e.target);
-
-
-            });
-
-            aa.addEventListener("keydown", function (e) {
 
 
                 $this.sortValidate(e.target);
@@ -110,18 +100,25 @@
         //分类验证
         sortValidate: function (ele) {
 
+
             var $this = this;
 
 
             var attrs = ele.attributes;
 
 
-            if(ele.value === ""){
+            if (ele.value === "") {
 
                 $this.removeAllErrorMsg(ele);
-                $this.reqValidate(ele);
 
-            }else {
+                if (ele.getAttribute("s-req") !== null) {
+
+                    $this.reqValidate(ele);
+
+                }
+
+
+            } else {
 
 
                 for (var j = 0, len2 = attrs.length; j < len2; j++) {
@@ -134,7 +131,7 @@
                         //运行对应的验证函数
 
 
-                        $this[splice_str+"Validate"].call($this, ele,splice_str);
+                        $this[splice_str + "Validate"].call($this, ele, splice_str);
 
 
                     }
@@ -143,8 +140,6 @@
                 }
 
             }
-
-
 
 
         },
@@ -156,7 +151,7 @@
 
             var required_msg = e.getAttribute("s-req-msg") || "该项不能为空";
 
-            if (e.value === "") {
+            if (e.value === "" && e.getAttribute("s-req") !== null) {
 
 
                 $this.appendErrorMsg(e, required_msg, 'req');
@@ -176,16 +171,16 @@
         //最大值验证方法
         maxValidate: function (e) {
 
-            var num  = e.getAttribute("s-max");
+            var num = e.getAttribute("s-max");
             var $this = this;
-            var required_msg = e.getAttribute("s-max-msg") || "该项最大值不超过"+num+"个字符";
+            var required_msg = e.getAttribute("s-max-msg") || "该项最大值不超过" + num + "个字符";
 
 
-            if(e.value.length > num){
+            if (e.value.length > num) {
 
                 $this.appendErrorMsg(e, required_msg, 'max');
 
-            }else {
+            } else {
 
                 $this.removeErrorMsg(e, 'max');
 
@@ -199,16 +194,16 @@
         //最小值验证方法
         minValidate: function (e) {
 
-            var num  = e.getAttribute("s-min");
+            var num = e.getAttribute("s-min");
             var $this = this;
-            var required_msg = e.getAttribute("s-min-msg") || "该项不低于"+num+"个字符";
+            var required_msg = e.getAttribute("s-min-msg") || "该项不低于" + num + "个字符";
 
 
-            if(e.value.length < num){
+            if (e.value.length < num) {
 
                 $this.appendErrorMsg(e, required_msg, 'max');
 
-            }else {
+            } else {
 
                 $this.removeErrorMsg(e, 'max');
 
@@ -221,16 +216,16 @@
         //比较表单验证方法
         compareValidate: function (e) {
 
-            var elem  = e.getAttribute("s-compare");
+            var elem = e.getAttribute("s-compare");
             var $this = this;
             var required_msg = e.getAttribute("s-compare-msg") || "两项比较不一致";
             var dom = document.querySelector(elem);
 
-            if(e.value !== dom.value){
+            if (e.value !== dom.value) {
 
                 $this.appendErrorMsg(e, required_msg, 'max');
 
-            }else {
+            } else {
 
                 $this.removeErrorMsg(e, 'max');
 
@@ -252,6 +247,7 @@
             span.textContent = msg;
             span.setAttribute("data-flag", flag);
 
+
             $this.removeAllErrorMsg(e, flag);
 
             e.insertAdjacentElement("afterend", span);
@@ -272,49 +268,43 @@
                 nodeArray.forEach(function (v) {
 
                     //错误原因相同才删
-                    if (flag && v.dataset.flag === flag) {
 
-                        v.remove();
+                    v.remove();
 
+                });
 
-                    }else {
+                $this.errorArray = [];
 
-                        v.remove();
-
-
-                    }
-
-                })
 
             }
+            ;
+
 
         },
 
         //移除错误信息
         removeErrorMsg: function (e, flag) {
 
-            var $this = this, nodeArray;
+            var $this = this;
 
-            $this.errorArray = [];
-
-            nodeArray = $this.findNextErrorElement(e);
+            var nodeArray = $this.findNextErrorElement(e);
 
             nodeArray.forEach(function (v) {
 
-                if ( v.dataset.flag === flag) {
+                if (v.dataset.flag === flag) {
 
                     v.remove();
 
-
                 }
-            })
+            });
+
+            $this.errorArray = [];
 
 
         },
 
         //找寻下一个错误节点
         findNextErrorElement: function (e) {
-
 
             var $this = this;
 
@@ -328,6 +318,7 @@
 
 
             } else {
+
 
                 return $this.errorArray;
 
