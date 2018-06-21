@@ -8,51 +8,47 @@
 
 <ul id="formList">
 
+
+
     <li><select s-req>
 
         <option value="" selected>1111</option>
         <option value="b">2</option>
         <option value="c">3</option>
 
-    </select> </li>
-    <li><input type="text" s-req s-req-msg="姓名不能为空"> </li>
-    <li><input type="text" s-max="5" s-req> </li>
-    <li><input type="text" s-req s-min="3" s-min="不能低于三个字符"> </li>
-    <li><input type="text" > </li>
-    <li><input type="text" s-phone s-req> </li>
-    <li><textarea s-max="10"></textarea> </li>
+    </select></li>
+    <li><input type="text" s-req s-req-msg="姓名不能为空"></li>
+    <li><input type="text" s-max="5" s-req></li>
+    <li><input type="text" s-req s-min="3" s-min="不能低于三个字符"></li>
+    <li><input type="text"></li>
+    <li><input type="text" s-phone s-req></li>
+    <li><textarea s-max="10"></textarea></li>
 
 </ul>
 
 <button id="id">提交</button>
 
-
-<!--<script src="../sigleFormValidateReBuild.js"></script>-->
 <script src="sigleFormValidate.min.js"></script>
 <script>
 
     var sfv = new Sfv();
 
-//if you want to add other validate options,you can add in  between instance and init function!
+    //if you want to add other validate options,you can add in  between instance and init function!
 
-//    for example
-    sfv.custom  = {
-
-
-
-    }
+    //    for example
+    sfv.custom = {}
 
     sfv.init("#formList");
 
-document.querySelector("#id").addEventListener("click",function () {
+    document.querySelector("#id").addEventListener("click", function () {
 
-    if(sfv.validate()){
+        if (sfv.validate()) {
 
-        console.log("you can submit!")
+            console.log("you can submit!")
 
-    }
+        }
 
-})
+    })
 
 
 </script>
