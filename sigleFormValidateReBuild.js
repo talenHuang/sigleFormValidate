@@ -11,8 +11,6 @@
                 "phone": {defaultMsg: "手机号不正确", reg: /^1[3-9][0-9]{9}$/},//手机
             }
 
-        this.all_doms = null;//作用域下的所有节点
-
         this.scope = document;
 
         this.counter = 0;//验证错误计数
@@ -53,6 +51,7 @@
 
             $this.type = Object.assign($this.defaultType, $this.custom);
 
+
             $this.scope = scope;
 
             $this.buildRelatedMethods();
@@ -65,7 +64,7 @@
 
             }
 
-            $this.all_doms = document.querySelectorAll(scope + " input");
+
 
             var aa = document.querySelector(scope);
 
@@ -332,7 +331,7 @@
         validate: function () {
 
             var $this = this;
-            var reqNodes = document.querySelector($this.scope).querySelectorAll("input[s-req]");
+            var reqNodes = document.querySelector($this.scope).querySelectorAll("input[s-req],select[s-req],textarea[s-req]");
 
 
             reqNodes.forEach(function (v) {
