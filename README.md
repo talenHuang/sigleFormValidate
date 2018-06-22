@@ -3,12 +3,12 @@
 form标签依然存在，而提交也使用的`<input type='submit'>`，这就很容易造成默认事件的冲突。<br>
 为此，个人弄了一个简单的表单验证，样式和配置都很灵活，适合小项目应用。（代码体积也是非常小，仅3.18k）
 
-#开始（start）
+# 开始（start）
 `html`引入js文件
 ````javascript
 <script src="sigleFormValidate.min.js"></script>
 ````
-#初始化（init）
+# 初始化（init）
 ````javascript
 
 <script>
@@ -53,7 +53,17 @@ form标签依然存在，而提交也使用的`<input type='submit'>`，这就�
 ````html
   <input type="text" s-int>
 ````
-* "defaultMsg":表示默认提示
+* "defaultMsg":表示默认提示内容，您也可以在标签上自定义
+````html
+  <input type="text" s-int s-int-msg="该项只能为数字">
+````
+* "reg": 表示需要验证的正则表达式，需要自己配置，特别注意：需要写成 /^\d$/ 这种形式。
+
+# 不要脸的话（tips）
+插件集成不摇碧莲的特点，所以样式需要你自己来控制，毕竟每个人的审美不同，项目不懂，肯定样式也不同（当然，主要是因为我比较懒-_-*）
+<br>
+您可以直接通过控制`s-err-msg`class来控制样式！
+
 
 # 最后的最后（last）
 如果有问题，欢迎issue指正。<br>
